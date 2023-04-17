@@ -12,9 +12,12 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: "Test",
-      home: TestPage(),
+    return BlocProvider(
+      create: (context) => SwitchCubit(),
+      child: const MaterialApp(
+        title: "Test",
+        home: TestPage(),
+      ),
     );
   }
 }
@@ -35,13 +38,13 @@ class TestPage extends StatelessWidget {
               onPressed: () {
                 showDialog(
                   context: context,
-                  builder: (context) {
-                    return Material(
-                      child: BlocProvider(
-                        create: (context) => SwitchCubit(),
-                        child: AlertDialog(
-                          content: Text(
-                            context.read<SwitchCubit>().toString(),
+                  builder: (innerContext) {
+                    return BlocProvider.value(
+                      value: context.watch<SwitchCubit>(),
+                      child: Material(
+                        child: BlocBuilder<SwitchCubit, bool>(
+                          builder: (context, state) => AlertDialog(
+                            content: Text(state.toString()),
                           ),
                         ),
                       ),

@@ -7,20 +7,17 @@ class SwitchBloc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => SwitchCubit(),
-      child: BlocBuilder<SwitchCubit, bool>(
-        builder: (context, state) {
-          return Switch(
-            value: state,
-            activeColor: Colors.green,
-            onChanged: (bool value) {
-              // This is called when the user toggles the switch.
-              BlocProvider.of<SwitchCubit>(context).toggle();
-            },
-          );
-        },
-      ),
+    return BlocBuilder<SwitchCubit, bool>(
+      builder: (context, state) {
+        return Switch(
+          value: state,
+          activeColor: Colors.green,
+          onChanged: (bool value) {
+            // This is called when the user toggles the switch.
+            context.read<SwitchCubit>().toggle();
+          },
+        );
+      },
     );
   }
 }
