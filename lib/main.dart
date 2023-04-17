@@ -37,9 +37,12 @@ class TestPage extends StatelessWidget {
                   context: context,
                   builder: (context) {
                     return Material(
-                      child: BlocBuilder<SwitchCubit, bool>(
-                        builder: (context, state) => AlertDialog(
-                          content: Text(state.toString()),
+                      child: BlocProvider(
+                        create: (context) => SwitchCubit(),
+                        child: AlertDialog(
+                          content: Text(
+                            context.read<SwitchCubit>().toString(),
+                          ),
                         ),
                       ),
                     );
